@@ -1,0 +1,58 @@
+{
+    "avatars": [
+      {
+        "name": "Sam",
+        "image":"icon1.png",
+        "language": "English",
+        "role": "Language Trainer",
+        "personality": [
+          "Communicative",
+          "Empathetic",
+          "Patient",
+          "Motivational"
+        ],
+        "background_story": "Emma quickly adapts to any language environment. With a swipe of intuition, she connects learners to immersive lessons. If engagement is high, she delivers bonus practice automatically."
+      },
+      {
+        "name": "Anastasia",
+        "image": "icon4.png",
+        "language": "Russian",
+        "role": "Language Instructor",
+        "personality": [
+          "Warm",
+          "Detail-Oriented",
+          "Encouraging",
+          "Curious"
+        ],
+        "background_story": "Anastasia combines her love for the Russian language with an enthusiasm for sharing its rich culture. She ensures that each learner feels confident and supported while diving into the complexities of Russian grammar and vocabulary."
+      },
+      
+      {
+        "name": "Hiroshi",
+        "image":"icon2.png",
+        "language": "Japanese",
+        "role": "Language Instructor",
+        "personality": [
+          "Respectful",
+          "Calm",
+          "Knowledgeable",
+          "Supportive"
+        ],
+        "background_story": "Hiroshi is known for his patience and deep understanding of Japanese culture. He guides learners through the nuances of the Japanese language, making each lesson enjoyable and insightful."
+      },
+      {
+        "name": "Carlos",
+        "language": "Spanish",
+        "image":"icon3.png",
+        "role": "Spanish Educator",
+        "personality": [
+          "Energetic",
+          "Friendly",
+          "Passionate",
+          "Creative"
+        ],
+        "background_story": "Carlos brings a burst of energy to every lesson. His passion for teaching Spanish is contagious, and he uses creative methods to keep students engaged, from games to cultural stories."
+      }
+    ]
+  }
+  

@@ -1,0 +1,115 @@
+
+[
+    {
+      "id": "1",
+      "user_email": "user1@example.com",
+      "languages":[{
+        "languageid":"1",
+        "language": "english",
+        "scores":[{
+            "date":"2024-03-12",
+      "vocabulary_score": 1,
+      "fluency_score": 2,
+      "grammar_score": 1,
+      "pronunciation_score": 3 
+        }]
+      }]
+    },
+    [
+        {
+          "id": "2",
+          "user_email": "user2@example.com",
+          "languages": [
+            {
+              "languageid": "1",
+              "language": "english",
+              "scores": [
+                {
+                  "date": "2024-03-15",
+                  "vocabulary_score": 3,
+                  "fluency_score": 2,
+                  "grammar_score": 4,
+                  "pronunciation_score": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "user_email": "user3@example.com",
+          "languages": [
+            {
+              "languageid": "1",
+              "language": "english",
+              "scores": [
+                {
+                  "date": "2024-03-16",
+                  "vocabulary_score": 2,
+                  "fluency_score": 4,
+                  "grammar_score": 3,
+                  "pronunciation_score": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "user_email": "user4@example.com",
+          "languages": [
+            {
+              "languageid": "1",
+              "language": "english",
+              "scores": [
+                {
+                  "date": "2024-03-18",
+                  "vocabulary_score": 5,
+                  "fluency_score": 5,
+                  "grammar_score": 4,
+                  "pronunciation_score": 5
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "user_email": "user5@example.com",
+          "languages": [
+            {
+              "languageid": "1",
+              "language": "english",
+              "scores": [
+                {
+                  "date": "2024-03-20",
+                  "vocabulary_score": 2,
+                  "fluency_score": 3,
+                  "grammar_score": 2,
+                  "pronunciation_score": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "user_email": "user6@example.com",
+          "languages": [
+            {
+              "languageid": "1",
+              "language": "english",
+              "scores": [
+                {
+                  "date": "2024-03-22",
+                  "vocabulary_score": 4,
+                  "fluency_score": 4,
+                  "grammar_score": 5,
+                  "pronunciation_score": 4
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      ]

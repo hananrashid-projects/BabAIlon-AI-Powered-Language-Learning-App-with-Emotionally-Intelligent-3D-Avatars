@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Earth</title>
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+         #homeButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 20;
+        }
+
+        /* 🔍 Search Bar Container */
+        #search-container {
+            position: absolute;
+            top: 50px; /* Add space below the home button */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* 🔍 Search Box */
+        #search-box {
+            width: 250px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid white;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 14px;
+            padding-right: 35px; /* Space for the X button */
+            position: relative;
+        }
+
+        /* ❌ Clear Button (Inside Search Box) */
+        #clear-btn {
+            position: absolute;
+            right: 80px; /* Moves it inside the search box */
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s ease-in-out;
+            display: none; /* Hide it initially */
+        }
+
+        #clear-btn:hover {
+            opacity: 1;
+        }
+
+        /* 🔎 Search Button */
+        #search-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #search-btn:hover {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            transform: scale(1.05);
+        }
+
+        /* 🎨 Country Info Card (Hidden by Default) */
+        #country-info {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 270px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+            color: white;
+            font-family: Arial, sans-serif;
+            transition: right 0.5s ease-in-out;
+            z-index: 10;
+            display: none;  /* ✅ Fully remove from layout when hidden */
+        }
+
+        #country-info img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        #country-info h2 {
+            margin: 12px 0;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #country-info p {
+            font-size: 14px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        #country-info button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #country-info button:hover {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            transform: scale(1.05);
+        }
+
+        #country-info.show {
+            display: block; 
+        }
+        #loadingPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            font-size: 20px;
+        }
+
+
+        /* 🌍 Make sure it's responsive */
+        @media (max-width: 600px) {
+            #country-info {
+                width: 220px;
+                padding: 15px;
+            }
+
+            #country-info h2 {
+                font-size: 18px;
+            }
+
+            #country-info p {
+                font-size: 12px;
+            }
+
+            #country-info button {
+                font-size: 13px;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js",
+                "jsm/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="homeButton">&#8592; Home</button>
+    <div id="loadingPage">
+        <div class="spinner"></div>
+        <div>Loading...</div>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-box" placeholder="Search for a country or language...">
+        <button id="clear-btn">✖</button>
+        <button id="search-btn">Search</button>
+    </div>
+    
+    <!-- Country Info Panel -->
+    <div id="country-info"></div>
+
+    <script>
+      document.getElementById("homeButton").addEventListener("click", function() {
+            document.getElementById("loadingPage").style.display = 'flex';
+
+            setTimeout(function() {
+                if (window.flutter_inappwebview) {
+                    window.flutter_inappwebview.callHandler('goHome');
+                } else {
+                    window.location.href = "/#/home";
+                }
+                document.getElementById("loadingPage").style.display = 'none'; 
+            }, 2000); 
+        });
+    
+        const searchBox = document.getElementById('search-box');
+        const clearBtn = document.getElementById('clear-btn');
+
+        searchBox.addEventListener('input', function() {
+            if (searchBox.value.length > 0) {
+                clearBtn.style.display = 'block'; 
+            } else {
+                clearBtn.style.display = 'none';
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            searchBox.value = '';
+            clearBtn.style.display = 'none';
+        });
+    </script>
+    <script type="module" src="index.js"></script>
+
+
+</body>
+</html>

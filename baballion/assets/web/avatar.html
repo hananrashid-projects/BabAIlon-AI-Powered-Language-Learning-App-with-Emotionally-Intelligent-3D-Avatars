@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Avatar Screen</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script> -->
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at center, #1a1a1a 0%, #0b0b0b 100%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-bottom: 100px; /* Space for thumbnail strip */
+    }
+
+    /* Back Button Style */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wrapper {
+      max-width: 1100px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+    .left-panel, .right-panel {
+      flex: 1 1 100%;
+    }
+
+    @media (min-width: 768px) {
+      .left-panel, .right-panel {
+        flex: 1;
+      }
+      .wrapper {
+        flex-direction: row;
+      }
+    }
+
+    .left-panel {
+      text-align: center;
+    }
+
+    .avatar-img {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .swipe-container {
+  position: relative;
+  width: 80%;
+  max-width: 400px;
+  height: 50px;
+  background: #333;
+  border-radius: 25px;
+  overflow: hidden;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    .swipe-button {
+      position: absolute;
+      width: 20px;
+      height: 100%;
+      background: #fcb131;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #000;
+      transition: transform 0.3s ease;
+      padding: 0 20px;
+    }
+
+    .swipe-button i {
+      margin-right: 10px;
+    }
+
+    .swipe-button.swiped {
+      transform: translateX(100%);
+    }
+
+    .right-panel {
+      background-color: #1d1d1d;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.05);
+      margin-top: 20px;
+    }
+
+    .info-group {
+      margin-bottom: 20px;
+    }
+
+    .label {
+      color: #c6a23e;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.77rem;
+      letter-spacing: 1px;
+    }
+
+    .value {
+      font-size: 0.9rem;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .abilities {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ability-icon {
+      width: 40px;
+      height: 40px;
+      background: #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .bottom-thumbs {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      background: rgba(0,0,0,0.7);
+      padding: 12px 20px;
+      border-radius: 12px;
+      z-index: 999;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+
+    .thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .thumb:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 480px) {
+      .swipe-button {
+        font-size: 0.9rem;
+      }
+
+      .ability-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+      }
+
+      .right-panel {
+        padding: 16px;
+      }
+      
+    }
+    .left-panel {
+  text-align: center;
+}
+
+.avatar-container {
+  position: relative;
+  width: 360px; 
+  height: 360px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('future.png');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 70%;  /* Adjust as per the desired size of the avatar */
+  height: auto;
+  position: absolute;
+}
+
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="window.history.back();">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+<div class="wrapper">
+  <div class="left-panel">
+    <div class="avatar-container">
+      <img src="future.png" alt="Background Image" class="future-image">
+      <img src="icon1.png" alt="Avatar" class="avatar-img" id="avatar-image">
+    </div>  </div>
+
+  <div class="right-panel">
+    <h3 id="avatar-name" style="margin: 0 0 10px; font-size: 2.5rem;">Loading...</h3>
+    <div class="info-group">
+      <div class="label">Language</div>
+      <div class="value" id="language-display">Loading...</div>
+    </div>
+    <div class="info-group">
+      <div class="label">Role</div>
+      <div class="value" id="role-display">Loading...</div>
+    </div>
+    <div class="info-group">
+      <div class="label">Score</div>
+      <div class="value" id="score-display">☆☆☆☆☆</div>
+    </div>
+    
+    <div class="info-group">
+      <div class="label">Personality</div>
+      <div class="value" id="personality-display">Loading...</div>
+    </div>
+    <div class="info-group">
+      <div class="label">Background Story</div>
+      <p class="value" id="background-story">Loading...</p>
+    </div>
+  </div>
+
+    <!-- Swipeable Call Button -->
+    <div class="swipe-container">
+      <div class="swipe-button">
+        <i class="fas fa-phone"></i>
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+<!-- Thumbnails (Bottom) -->
+<div class="bottom-thumbs">
+  <img src="icon1.png" class="thumb" title="Emma">
+  <img src="icon2.png" class="thumb" title="Carlos">
+  <img src="icon3.png" class="thumb" title="Lina">
+  <img src="icon4.png" class="thumb" title="Hassan">
+</div>
+
+<script type="module">
+
+    const userEmail = localStorage.getItem('loginEmail');
+
+   if (userEmail) {
+            console.log("User email is: ", userEmail);  // Corrected print statement
+        } else {
+            console.log("No user email found in localStorage.");
+        } 
+        print(userEmail)
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion,getDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDf1xpgc1in-bzrJa7eETjJGJ8nZQxAWfQ",
+    authDomain: "babailon.firebaseapp.com",
+    projectId: "babailon",
+    storageBucket: "babailon.firebasestorage.app",
+    messagingSenderId: "243712887789",
+    appId: "1:243712887789:web:a4e1a2b05cc06ac16eb5e4",
+    measurementId: "G-X90Y9QS3PQ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  function getLanguageValue() {
+    // Get the language value from the 'language-display' element
+    return document.getElementById('language-display').textContent.trim();
+  }
+  function updateUserData(loginEmail, language) {
+  const usersCollection = collection(db, 'dashboards');
+
+  getDocs(usersCollection)
+    .then((snapshot) => {
+      let userDoc = null;
+      snapshot.forEach(doc => {
+        const userData = doc.data();
+        if (userData.user_email === loginEmail) {
+          userDoc = doc;
+        }
+      });
+
+      if (userDoc) {
+        const userRef = doc(db, 'dashboards', userDoc.id);
+
+        getDoc(userRef)
+          .then(userSnapshot => {
+            const userData = userSnapshot.data();
+            const existingLanguages = userData.languages || [];
+
+            const languageExists = existingLanguages.some(
+              (langObj) => langObj.language === language
+            );
+
+            if (languageExists) {
+              console.log(`Language "${language}" already exists. No update needed.`);
+              return;
+            }
+
+            const newLanguageObj = {
+              language: language,
+              feedbackHistory: [],
+              scores: []
+            };
+
+            updateDoc(userRef, {
+              languages: arrayUnion(newLanguageObj)
+            })
+              .then(() => {
+                console.log(`Language "${language}" added successfully.`);
+              })
+              .catch((error) => {
+                console.error('Error updating user data:', error);
+              });
+          })
+          .catch((error) => {
+            console.error('Error retrieving user document:', error);
+          });
+      } else {
+        console.log('User not found.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching user data from Firestore:', error);
+    });
+}
+
+  function testFirestoreConnection() {
+    const loginEmail = localStorage.getItem('loginEmail');
+
+    if (loginEmail) {
+      console.log("User email is: ", loginEmail);
+      const language = getLanguageValue(); 
+      console.log("Language fetched: ", language);
+      updateUserData(loginEmail, language);
+    } else {
+      console.log("No user email found in localStorage.");
+    }
+  }
+
+    
+const swipeButton = document.querySelector('.swipe-button');
+  const swipeContainer = document.querySelector('.swipe-container');
+  let startX = 0;
+  
+  swipeButton.addEventListener('mousedown', function (e) {
+    startX = e.clientX;
+    document.addEventListener('mousemove', handleSwipe);
+    document.addEventListener('mouseup', stopSwipe);
+  });
+  
+  swipeButton.addEventListener('touchstart', function (e) {
+    startX = e.touches[0].clientX;
+    document.addEventListener('touchmove', handleSwipe);
+    document.addEventListener('touchend', stopSwipe);
+  });
+  
+  function handleSwipe(e) {
+    
+    const deltaX = (e.clientX || e.touches[0].clientX) - startX;
+    if (deltaX > 0) {
+      swipeButton.style.transform = `translateX(${Math.min(deltaX, swipeContainer.offsetWidth - swipeButton.offsetWidth)}px)`;
+      
+    }
+  }
+  function stopSwipe(e) {
+    const deltaX = (e.clientX || e.changedTouches[0].clientX) - startX;
+    
+    if (deltaX > swipeContainer.offsetWidth /2) {
+      swipeButton.classList.add('swiped');
+      swipeButton.style.transform = `translateX(${swipeContainer.offsetWidth - swipeButton.offsetWidth}px)`;  // Slide to the end
+      testFirestoreConnection();
+
+      setTimeout(() => {
+  const language = getLanguageValue(); // Get current language
+  const loginEmail = localStorage.getItem('loginEmail'); // Get stored email
+
+  const encodedLang = encodeURIComponent(language);
+  const encodedEmail = encodeURIComponent(loginEmail);
+
+  const origin = encodeURIComponent(window.location.origin);
+window.location.href = `http://localhost:5173/?lang=${encodedLang}&email=${encodedEmail}&origin=${origin}`;
+}, 300);
+
+      
+    } else {
+      swipeButton.style.transform = 'translateX(0)'; 
+    }
+  
+    document.removeEventListener('mousemove', handleSwipe);
+    document.removeEventListener('mouseup', stopSwipe);
+    document.removeEventListener('touchmove', handleSwipe);
+    document.removeEventListener('touchend', stopSwipe);
+    const userEmail = localStorage.getItem('userEmail');
+     
+}
+
+  function getQueryParameter(name){
+    const urlParams=new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+//   function saveLoginEmailToFile() {
+//   const email = localStorage.getItem('loginEmail');
+//   if (!email) {
+//     console.log('No loginEmail found.');
+//     return;
+//   }
+
+//   const blob = new Blob([email], { type: 'text/plain' });
+//   const url = URL.createObjectURL(blob);
+
+//   const a = document.createElement('a');
+//   a.href = url;
+//   a.download = 'loginEmail.txt';  // This ensures the file is named 'loginEmail.txt'
+//   a.click();  // This triggers the download
+
+//   URL.revokeObjectURL(url);  // Clean up the object URL
+// }
+
+  const language = getQueryParameter('lang');
+  if (language) {
+    document.getElementById('language-display').textContent = language;
+  } else {
+    document.getElementById('language-display').textContent = 'No language selected';
+  }fetch('langauges.json')
+  .then(response => response.json())
+  .then(data => {
+    const language = new URLSearchParams(window.location.search).get('lang');
+    const avatar = data.avatars.find(avatar => avatar.language.toLowerCase() === language?.toLowerCase());
+
+    if (avatar) {
+      document.getElementById('avatar-name').textContent = avatar.name;
+      document.getElementById('language-display').textContent = avatar.language;
+      document.getElementById('role-display').textContent = avatar.role;
+      document.getElementById('personality-display').textContent = avatar.personality.join(", ");
+      document.getElementById('background-story').textContent = avatar.background_story;
+      document.getElementById('avatar-image').src = avatar.image;  // Corrected here
+    } else {
+      document.getElementById('avatar-name').textContent = "Avatar not found";
+      document.getElementById('language-display').textContent = "No matching avatar for the selected language.";
+    }
+  })
+  .catch(error => {
+    console.error('Error loading avatar data:', error);
+  });
+ 
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+[
+    {
+      "userID": "2Nim10EGqoRuZWmBSfi6JHGDUkp1",
+      "vocabularyPercentage": 85.5,
+      "pronunciationPercentage": 78.2,
+      "grammarPercentage": 90.3,
+      "fluencyPercentage": 88.4
+    },
+    {
+      "userID": "NgUwDzAPUJP6otGeZbkJpq3aBuC3",
+      "vocabularyPercentage": 72.1,
+      "pronunciationPercentage": 80.5,
+      "grammarPercentage": 75.6,
+      "fluencyPercentage": 79.8
+    },
+    {
+      "userID": "SBXGy1vI73fpY6H82C6KpWNuEgI3",
+      "vocabularyPercentage": 91.0,
+      "pronunciationPercentage": 85.7,
+      "grammarPercentage": 92.4,
+      "fluencyPercentage": 89.5
+    },
+    {
+      "userID": "ZPDWh6dVH3NlOLPsqrvOgtXRQJJ3",
+      "vocabularyPercentage": 67.3,
+      "pronunciationPercentage": 72.8,
+      "grammarPercentage": 70.2,
+      "fluencyPercentage": 73.5
+    },
+    {
+      "userID": "dam6DlShluMe7uauPOfzhfgf1fA3",
+      "vocabularyPercentage": 88.9,
+      "pronunciationPercentage": 81.0,
+      "grammarPercentage": 87.3,
+      "fluencyPercentage": 85.6
+    },
+    {
+      "userID": "n4DhAicHeZXtOClGOYdxwwb5zVp2",
+      "vocabularyPercentage": 76.5,
+      "pronunciationPercentage": 79.9,
+      "grammarPercentage": 80.0,
+      "fluencyPercentage": 78.2
+    }
+  ]
+  
